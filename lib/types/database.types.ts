@@ -39,6 +39,228 @@ export type Database = {
   }
   public: {
     Tables: {
+      companies: {
+        Row: {
+          company_size: string | null
+          created_at: string | null
+          description: string | null
+          enriched_at: string | null
+          founded_year: number | null
+          headquarters_location: string | null
+          id: string
+          industry: string | null
+          is_enriched: boolean | null
+          logo_url: string | null
+          name: string
+          name_variations: string[] | null
+          updated_at: string | null
+          website: string | null
+        }
+        Insert: {
+          company_size?: string | null
+          created_at?: string | null
+          description?: string | null
+          enriched_at?: string | null
+          founded_year?: number | null
+          headquarters_location?: string | null
+          id?: string
+          industry?: string | null
+          is_enriched?: boolean | null
+          logo_url?: string | null
+          name: string
+          name_variations?: string[] | null
+          updated_at?: string | null
+          website?: string | null
+        }
+        Update: {
+          company_size?: string | null
+          created_at?: string | null
+          description?: string | null
+          enriched_at?: string | null
+          founded_year?: number | null
+          headquarters_location?: string | null
+          id?: string
+          industry?: string | null
+          is_enriched?: boolean | null
+          logo_url?: string | null
+          name?: string
+          name_variations?: string[] | null
+          updated_at?: string | null
+          website?: string | null
+        }
+        Relationships: []
+      }
+      job_board_searches: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          job_board: string
+          last_scraped_at: string | null
+          search_criteria_id: string
+          search_params: Json | null
+          search_url: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          job_board: string
+          last_scraped_at?: string | null
+          search_criteria_id: string
+          search_params?: Json | null
+          search_url?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          job_board?: string
+          last_scraped_at?: string | null
+          search_criteria_id?: string
+          search_params?: Json | null
+          search_url?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_board_searches_search_criteria_id_fkey"
+            columns: ["search_criteria_id"]
+            isOneToOne: false
+            referencedRelation: "search_criteria"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_board_searches_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jobs: {
+        Row: {
+          company_id: string
+          company_name_raw: string | null
+          contract_type: string | null
+          created_at: string | null
+          description: string | null
+          description_short: string | null
+          employment_status: string | null
+          experience_level: string | null
+          id: string
+          is_active: boolean | null
+          is_canonical: boolean | null
+          is_company_normalized: boolean | null
+          is_duplicate_checked: boolean | null
+          is_enriched: boolean | null
+          last_seen_at: string | null
+          location: string | null
+          parent_job_id: string | null
+          posted_date: string | null
+          requirements: string[] | null
+          responsibilities: string[] | null
+          salary_currency: string | null
+          salary_max: number | null
+          salary_min: number | null
+          salary_period: string | null
+          scraped_at: string | null
+          source_board: string
+          source_job_id: string | null
+          source_url: string
+          title: string
+          updated_at: string | null
+          work_model: string | null
+        }
+        Insert: {
+          company_id: string
+          company_name_raw?: string | null
+          contract_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          description_short?: string | null
+          employment_status?: string | null
+          experience_level?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_canonical?: boolean | null
+          is_company_normalized?: boolean | null
+          is_duplicate_checked?: boolean | null
+          is_enriched?: boolean | null
+          last_seen_at?: string | null
+          location?: string | null
+          parent_job_id?: string | null
+          posted_date?: string | null
+          requirements?: string[] | null
+          responsibilities?: string[] | null
+          salary_currency?: string | null
+          salary_max?: number | null
+          salary_min?: number | null
+          salary_period?: string | null
+          scraped_at?: string | null
+          source_board: string
+          source_job_id?: string | null
+          source_url: string
+          title: string
+          updated_at?: string | null
+          work_model?: string | null
+        }
+        Update: {
+          company_id?: string
+          company_name_raw?: string | null
+          contract_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          description_short?: string | null
+          employment_status?: string | null
+          experience_level?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_canonical?: boolean | null
+          is_company_normalized?: boolean | null
+          is_duplicate_checked?: boolean | null
+          is_enriched?: boolean | null
+          last_seen_at?: string | null
+          location?: string | null
+          parent_job_id?: string | null
+          posted_date?: string | null
+          requirements?: string[] | null
+          responsibilities?: string[] | null
+          salary_currency?: string | null
+          salary_max?: number | null
+          salary_min?: number | null
+          salary_period?: string | null
+          scraped_at?: string | null
+          source_board?: string
+          source_job_id?: string | null
+          source_url?: string
+          title?: string
+          updated_at?: string | null
+          work_model?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jobs_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_parent_job_id_fkey"
+            columns: ["parent_job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       search_criteria: {
         Row: {
           contract_types: string[] | null
