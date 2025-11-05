@@ -34,7 +34,7 @@ Create reusable UI components (Button, Input, Card, Badge, Typography) following
 
 Install and configure Vitest and React Testing Library for unit and component testing.
 
-## [ ] 0.9 Development Workflow Documentation
+## [x] 0.9 Development Workflow Documentation
 
 Document how to run the project locally and the development workflow in README.
 
@@ -44,7 +44,7 @@ Document how to run the project locally and the development workflow in README.
 
 ## [ ] 1.1 Core User Tables
 
-Create `user_profiles` table with user information (name, phone, CV, profile completeness). Link to Supabase auth.users.
+Create `user_profiles` table with user information. Link to Supabase auth.users.
 
 ## [ ] 1.2 User Experience & Skills
 
@@ -52,11 +52,11 @@ Create `user_experiences` table for work history and `user_skills` table for ski
 
 ## [ ] 1.3 Search Preferences
 
-Create `search_criteria` table to store user's job search preferences (titles, locations, salary, work model, role descriptions, must-haves, deal-breakers).
+Create `search_criteria` table to store user's job search preferences.
 
 ## [ ] 1.4 Companies & Jobs
 
-Create `companies` table for normalized company data. Create `jobs` table for job postings with fields for basic info (title, description, salary, location) and relationship to companies. Include self-referencing foreign key for duplicate detection.
+Create `companies` table for normalized company data. Create `jobs` table for job postings with fields for basic info and relationship to companies. Include self-referencing foreign key for duplicate detection.
 
 ## [ ] 1.5 Job Board Searches
 
@@ -64,7 +64,7 @@ Create `job_board_searches` table to store pre-built search queries for each use
 
 ## [ ] 1.6 Matching System
 
-Create `job_matches` table to store AI evaluations of job-user fit. Includes score (1-10), reasoning, matching_points, concerns, and status tracking (fresh/reviewing/accepted/discarded).
+Create `job_matches` table to store AI evaluations of job-user fit. 
 
 ## [ ] 1.7 Application Management
 
@@ -72,11 +72,11 @@ Create `job_applications` table for tracking application status (to_apply, appli
 
 ## [ ] 1.8 Subscription & Billing
 
-Create `subscriptions` table for Stripe integration (status, plan, billing period). Create `subscription_transactions` table for payment history.
+Create `subscriptions` table for Stripe integration . Create `subscription_transactions` table for payment history.
 
 ## [ ] 1.9 Notifications
 
-Create `notification_preferences` table for user email notification settings (new matches, application reminders).
+Create `notification_preferences` table for user email notification settings
 
 ## [ ] 1.10 Row Level Security (RLS)
 

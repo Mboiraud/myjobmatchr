@@ -39,7 +39,45 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      user_profiles: {
+        Row: {
+          created_at: string | null
+          cv_file_url: string | null
+          cv_parsed_text: string | null
+          first_name: string | null
+          id: string
+          last_manual_search_at: string | null
+          last_name: string | null
+          phone_number: string | null
+          profile_completeness: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          cv_file_url?: string | null
+          cv_parsed_text?: string | null
+          first_name?: string | null
+          id: string
+          last_manual_search_at?: string | null
+          last_name?: string | null
+          phone_number?: string | null
+          profile_completeness?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          cv_file_url?: string | null
+          cv_parsed_text?: string | null
+          first_name?: string | null
+          id?: string
+          last_manual_search_at?: string | null
+          last_name?: string | null
+          phone_number?: string | null
+          profile_completeness?: number | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
