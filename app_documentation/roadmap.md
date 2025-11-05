@@ -14,7 +14,7 @@ Install and configure ESLint and Prettier for consistent code formatting.
 
 Create `.env.local` and `.env.example` files for environment variables.
 
-## [ ] 0.4 Supabase Setup
+## [x] 0.4 Supabase Setup
 
 Create Supabase project, install client libraries, and set up local connection. Create client utilities for browser and server-side usage.
 
