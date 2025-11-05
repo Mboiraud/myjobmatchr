@@ -39,6 +39,89 @@ export type Database = {
   }
   public: {
     Tables: {
+      search_criteria: {
+        Row: {
+          contract_types: string[] | null
+          created_at: string | null
+          id: string
+          ideal_role_description: string | null
+          important_keywords: string[] | null
+          industries: string[] | null
+          is_active: boolean | null
+          matching_instructions: string
+          must_have_requirements: string | null
+          must_not_have_requirements: string | null
+          preferred_locations: string[] | null
+          salary_currency: string | null
+          salary_max: number | null
+          salary_min: number | null
+          seniority_levels: string[] | null
+          target_job_titles: string[] | null
+          updated_at: string | null
+          user_id: string
+          willing_to_relocate: boolean | null
+          work_environment_preferences: string | null
+          work_models: string[] | null
+          years_of_experience: number | null
+        }
+        Insert: {
+          contract_types?: string[] | null
+          created_at?: string | null
+          id?: string
+          ideal_role_description?: string | null
+          important_keywords?: string[] | null
+          industries?: string[] | null
+          is_active?: boolean | null
+          matching_instructions: string
+          must_have_requirements?: string | null
+          must_not_have_requirements?: string | null
+          preferred_locations?: string[] | null
+          salary_currency?: string | null
+          salary_max?: number | null
+          salary_min?: number | null
+          seniority_levels?: string[] | null
+          target_job_titles?: string[] | null
+          updated_at?: string | null
+          user_id: string
+          willing_to_relocate?: boolean | null
+          work_environment_preferences?: string | null
+          work_models?: string[] | null
+          years_of_experience?: number | null
+        }
+        Update: {
+          contract_types?: string[] | null
+          created_at?: string | null
+          id?: string
+          ideal_role_description?: string | null
+          important_keywords?: string[] | null
+          industries?: string[] | null
+          is_active?: boolean | null
+          matching_instructions?: string
+          must_have_requirements?: string | null
+          must_not_have_requirements?: string | null
+          preferred_locations?: string[] | null
+          salary_currency?: string | null
+          salary_max?: number | null
+          salary_min?: number | null
+          seniority_levels?: string[] | null
+          target_job_titles?: string[] | null
+          updated_at?: string | null
+          user_id?: string
+          willing_to_relocate?: boolean | null
+          work_environment_preferences?: string | null
+          work_models?: string[] | null
+          years_of_experience?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "search_criteria_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_experiences: {
         Row: {
           company_name: string

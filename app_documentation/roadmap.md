@@ -46,7 +46,7 @@ Document how to run the project locally and the development workflow in README.
 
 Create `user_profiles` table with user information. Link to Supabase auth.users.
 
-## [ ] 1.2 User Experience & Skills
+## [x] 1.2 User Experience & Skills
 
 Create `user_experiences` table for work history and `user_skills` table for skills. Both linked to user_profiles with proper foreign keys.
 
