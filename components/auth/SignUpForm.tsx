@@ -12,6 +12,7 @@ export function SignUpForm() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,8 +40,9 @@ export function SignUpForm() {
       setError(result.error);
       setLoading(false);
     } else {
-      // Success - user will be redirected or see success message
-      // In real app, you might show "Check your email" message
+      // Success - show "Check your email" message
+      setSuccess(true);
+      setLoading(false);
     }
   };
 
@@ -53,6 +55,25 @@ export function SignUpForm() {
       setLoading(false);
     }
   };
+
+  if (success) {
+    return (
+      <div className="w-full text-center">
+        <div className="p-4 bg-green-50 border border-green-200 rounded-lg mb-4">
+          <p className="text-green-800 font-medium">Check your email</p>
+          <p className="text-green-700 text-sm mt-1">
+            We've sent a confirmation link to your email. Click the link to verify your account and sign in.
+          </p>
+        </div>
+        <button
+          onClick={() => setSuccess(false)}
+          className="text-primary hover:underline text-sm font-medium"
+        >
+          Back to sign up
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">
