@@ -39,6 +39,38 @@ export type Database = {
   }
   public: {
     Tables: {
+      application_notes: {
+        Row: {
+          application_id: string
+          created_at: string | null
+          id: string
+          note_text: string
+          updated_at: string | null
+        }
+        Insert: {
+          application_id: string
+          created_at?: string | null
+          id?: string
+          note_text: string
+          updated_at?: string | null
+        }
+        Update: {
+          application_id?: string
+          created_at?: string | null
+          id?: string
+          note_text?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "application_notes_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "job_applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       companies: {
         Row: {
           company_size: string | null
@@ -89,6 +121,64 @@ export type Database = {
           website?: string | null
         }
         Relationships: []
+      }
+      job_applications: {
+        Row: {
+          created_at: string | null
+          date_added: string
+          date_applied: string | null
+          id: string
+          job_id: string
+          match_id: string | null
+          status: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          date_added?: string
+          date_applied?: string | null
+          id?: string
+          job_id: string
+          match_id?: string | null
+          status?: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          date_added?: string
+          date_applied?: string | null
+          id?: string
+          job_id?: string
+          match_id?: string | null
+          status?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_applications_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_applications_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "job_matches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_applications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       job_board_searches: {
         Row: {
