@@ -18,7 +18,7 @@ Create `.env.local` and `.env.example` files for environment variables.
 
 Create Supabase project, install client libraries, and set up local connection. Create client utilities for browser and server-side usage.
 
-## [ ] 0.5 Database Types Infrastructure
+## [x] 0.5 Database Types Infrastructure
 
 Generate TypeScript types from Supabase schema and set up automatic regeneration after schema changes.
 
