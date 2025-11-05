@@ -6,11 +6,11 @@ Roadmap
 
 Set up Next.js project with TypeScript and Tailwind CSS. Create basic folder structure and initialize Git.
 
-## [ ] 0.2 Development Tools & Code Quality
+## [x] 0.2 Development Tools & Code Quality
 
 Install and configure ESLint and Prettier for consistent code formatting.
 
-## [ ] 0.3 Environment Configuration
+## [x] 0.3 Environment Configuration
 
 Create `.env.local` and `.env.example` files for environment variables.
 
