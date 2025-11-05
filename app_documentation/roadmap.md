@@ -42,7 +42,7 @@ Document how to run the project locally and the development workflow in README.
 
 # Phase 1: Database Schema Implementation
 
-## [ ] 1.1 Core User Tables
+## [x] 1.1 Core User Tables
 
 Create `user_profiles` table with user information. Link to Supabase auth.users.
 
