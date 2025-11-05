@@ -144,6 +144,69 @@ export type Database = {
           },
         ]
       }
+      job_matches: {
+        Row: {
+          concerns: string[] | null
+          created_at: string | null
+          evaluated_at: string | null
+          id: string
+          is_discarded: boolean | null
+          is_matched: boolean | null
+          job_id: string
+          matching_points: string[] | null
+          reasoning: string | null
+          score: number | null
+          status: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          concerns?: string[] | null
+          created_at?: string | null
+          evaluated_at?: string | null
+          id?: string
+          is_discarded?: boolean | null
+          is_matched?: boolean | null
+          job_id: string
+          matching_points?: string[] | null
+          reasoning?: string | null
+          score?: number | null
+          status?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          concerns?: string[] | null
+          created_at?: string | null
+          evaluated_at?: string | null
+          id?: string
+          is_discarded?: boolean | null
+          is_matched?: boolean | null
+          job_id?: string
+          matching_points?: string[] | null
+          reasoning?: string | null
+          score?: number | null
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_matches_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_matches_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       jobs: {
         Row: {
           company_id: string
