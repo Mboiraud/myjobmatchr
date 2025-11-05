@@ -5,12 +5,14 @@
 **Logo** (links to home)
 
 **Navigation Menu:**
+
 - Job Matches
 - Applications
 - Profile
 - Search Criteria
 
 **User Profile Section** (avatar, name)
+
 - Dropdown menu on click:
   - Settings
   - Plan
