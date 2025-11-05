@@ -22,7 +22,7 @@ Create Supabase project, install client libraries, and set up local connection. 
 
 Generate TypeScript types from Supabase schema and set up automatic regeneration after schema changes.
 
-## [ ] 0.6 Design System Setup
+## [x] 0.6 Design System Setup
 
 Define core design tokens (colors, typography, spacing, shadows, borders) in Tailwind config.
 
