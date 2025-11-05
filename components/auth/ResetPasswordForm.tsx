@@ -37,7 +37,7 @@ export function ResetPasswordForm() {
 
   if (success) {
     return (
-      <div className="w-full max-w-md text-center">
+      <div className="w-full text-center">
         <div className="p-4 bg-green-50 border border-green-200 rounded-lg mb-4">
           <p className="text-green-800 font-medium">Check your email</p>
           <p className="text-green-700 text-sm mt-1">
@@ -53,7 +53,7 @@ export function ResetPasswordForm() {
   }
 
   return (
-    <div className="w-full max-w-md">
+    <div className="w-full">
       <form onSubmit={handleResetPassword} className="space-y-4">
         <p className="text-gray-600 text-sm">
           Enter your email address and we'll send you a link to reset your

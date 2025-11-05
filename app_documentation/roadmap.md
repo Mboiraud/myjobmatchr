@@ -54,39 +54,39 @@ Create `user_experiences` table for work history and `user_skills` table for ski
 
 Create `search_criteria` table to store user's job search preferences.
 
-## [ ] 1.4 Companies & Jobs
+## [x] 1.4 Companies & Jobs
 
 Create `companies` table for normalized company data. Create `jobs` table for job postings with fields for basic info and relationship to companies. Include self-referencing foreign key for duplicate detection.
 
-## [ ] 1.5 Job Board Searches
+## [x] 1.5 Job Board Searches
 
 Create `job_board_searches` table to store pre-built search queries for each user. Each row represents one API call to execute. Includes search_params (JSONB) and last_scraped_at tracking.
 
-## [ ] 1.6 Matching System
+## [x] 1.6 Matching System
 
 Create `job_matches` table to store AI evaluations of job-user fit. 
 
-## [ ] 1.7 Application Management
+## [x] 1.7 Application Management
 
 Create `job_applications` table for tracking application status (to_apply, applied, interview, offer, closed). Create `application_notes` table for user notes on each application.
 
-## [ ] 1.8 Subscription & Billing
+## [x] 1.8 Subscription & Billing
 
 Create `subscriptions` table for Stripe integration . Create `subscription_transactions` table for payment history.
 
-## [ ] 1.9 Notifications
+## [x] 1.9 Notifications
 
 Create `notification_preferences` table for user email notification settings
 
-## [ ] 1.10 Row Level Security (RLS)
+## [x] 1.10 Row Level Security (RLS)
 
 Enable RLS on all tables and create policies ensuring users can only access their own data. Public read access for companies and jobs tables.
 
-## [ ] 1.11 Database Triggers & Functions
+## [x] 1.11 Database Triggers & Functions
 
 Create `update_updated_at_column()` function and triggers. Create triggers to auto-create related rows on user signup (user_profiles → subscriptions → notification_preferences).
 
-## [ ] 1.12 Database Migrations Setup
+## [x] 1.12 Database Migrations Setup
 
 Create migrations folder structure and initial migration file with all schema. Document migration workflow for future changes.
 
@@ -94,19 +94,19 @@ Create migrations folder structure and initial migration file with all schema. D
 
 # Phase 2: Authentication System
 
-## [ ] 2.1 Public App Structure & Landing Page
+## [x] 2.1 Public App Structure & Landing Page
 
 Create basic landing page with header (logo, "Sign In" / "Get Started" buttons) and footer. Simple hero section explaining the app. This serves as the entry point to authentication.
 
-## [ ] 2.2 Supabase Auth Setup
+## [x] 2.2 Supabase Auth Setup
 
 Enable email/password and Google OAuth authentication in Supabase dashboard. Configure email templates and redirect URLs.
 
-## [ ] 2.3 Auth Helper Functions
+## [x] 2.3 Auth Helper Functions
 
 Create server-side auth utilities for getting user session, signing up, signing in, signing out, and resetting password.
 
-## [ ] 2.4 Auth UI Components
+## [x] 2.4 Auth UI Components
 
 Create SignUpForm, SignInForm, and ResetPasswordForm components using design system. Include email/password fields and Google OAuth buttons.
 
