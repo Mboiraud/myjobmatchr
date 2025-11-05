@@ -1,36 +1,130 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MyJobMatchr
+
+Your essential job search companion - an AI-powered platform for intelligent job aggregation, smart matching, and application tracking.
+
+## Tech Stack
+
+- **Framework:** Next.js 16 with App Router
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS v4
+- **Database:** Supabase (PostgreSQL + Auth + Storage + Vector DB)
+- **AI:** Google Gemini API (via Vercel AI SDK)
+- **Payments:** Stripe
+- **Email:** Resend + React Email
+- **Testing:** Vitest + React Testing Library
+- **Orchestration:** Inngest
+
+## Prerequisites
+
+- Node.js 18+ and npm
+- Supabase account and project
+- Supabase CLI installed (`brew install supabase/tap/supabase`)
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone and Install
+
+```bash
+git clone <repository-url>
+cd windsurf-project
+npm install
+```
+
+### 2. Environment Variables
+
+Copy `.env.example` to `.env.local` and fill in your credentials:
+
+```bash
+cp .env.example .env.local
+```
+
+Required variables:
+- `NEXT_PUBLIC_SUPABASE_URL` - Your Supabase project URL
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Your Supabase anon/public key
+- `SUPABASE_SERVICE_ROLE_KEY` - Your Supabase service role key
+
+### 3. Link Supabase Project
+
+```bash
+supabase login
+supabase link --project-ref <your-project-ref>
+```
+
+### 4. Generate Database Types
+
+```bash
+npm run types:generate
+```
+
+### 5. Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Available Commands
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Development
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
 
-## Learn More
+### Code Quality
+- `npm run lint` - Run ESLint
+- `npm run format` - Format code with Prettier
+- `npm run format:check` - Check code formatting
 
-To learn more about Next.js, take a look at the following resources:
+### Testing
+- `npm test` - Run tests in watch mode
+- `npm run test:ui` - Run tests with UI
+- `npm run test:coverage` - Run tests with coverage report
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Database
+- `npm run types:generate` - Generate TypeScript types from Supabase schema
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+windsurf-project/
+├── app/                    # Next.js App Router pages
+├── components/             # React components
+│   ├── ui/                # Reusable UI components (Button, Input, Card, etc.)
+│   └── features/          # Feature-specific components
+├── lib/                   # Utility functions and helpers
+│   ├── supabase/         # Supabase client utilities
+│   ├── utils/            # General utilities
+│   └── types/            # TypeScript type definitions
+├── tests/                 # Test files
+│   ├── unit/             # Unit tests
+│   └── e2e/              # End-to-end tests
+├── app_documentation/     # Project documentation
+└── public/               # Static assets
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Design System
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The project uses a custom design system with:
+- **Primary Color:** #7766C6 (purple)
+- **Typography:** System fonts with customizable heading and text components
+- **Components:** Button, Input, Card, Badge, Typography (Heading, Text)
+- **Spacing, shadows, and border radius tokens** defined in Tailwind config
+
+## Development Workflow
+
+1. Create a new branch for your feature
+2. Make changes and write tests
+3. Run `npm run format` to format code
+4. Run `npm test` to ensure tests pass
+5. Commit changes and push
+6. Create a pull request
+
+## Documentation
+
+Detailed documentation is available in the `app_documentation/` directory:
+- `app_summary.md` - Project overview
+- `tech_stack.md` - Technology stack details
+- `database_tables.md` - Database schema
+- `roadmap.md` - Development roadmap
+- Page specifications in `public_app_pages/` and `private_app_pages/`

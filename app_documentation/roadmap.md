@@ -30,7 +30,7 @@ Define core design tokens (colors, typography, spacing, shadows, borders) in Tai
 
 Create reusable UI components (Button, Input, Card, Badge, Typography) following the design system.
 
-## [ ] 0.8 Testing Infrastructure Setup
+## [x] 0.8 Testing Infrastructure Setup
 
 Install and configure Vitest and React Testing Library for unit and component testing.
 
