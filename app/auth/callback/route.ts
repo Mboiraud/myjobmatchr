@@ -28,13 +28,24 @@ export async function GET(request: NextRequest) {
     if (exchangeError) {
       return NextResponse.redirect(
         new URL(
-          `/signin?error=${encodeURIComponent(exchangeError.message)}`,
+          `/auth/verify-email/error?error=${encodeURIComponent(exchangeError.message)}`,
           request.url
         )
       );
     }
+
+    // Check if this is an email confirmation or OAuth
+    // The type is determined by looking at the session
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user?.email_confirmed_at) {
+      // Email has been verified, redirect to verification success page
+      return NextResponse.redirect(new URL("/auth/verify-email/success", request.url));
+    }
   }
 
-  // Redirect to dashboard on success
+  // Default: redirect to dashboard (OAuth flow)
   return NextResponse.redirect(new URL("/app/dashboard", request.url));
 }
