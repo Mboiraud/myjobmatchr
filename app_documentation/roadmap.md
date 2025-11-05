@@ -50,7 +50,7 @@ Create `user_profiles` table with user information. Link to Supabase auth.users.
 
 Create `user_experiences` table for work history and `user_skills` table for skills. Both linked to user_profiles with proper foreign keys.
 
-## [ ] 1.3 Search Preferences
+## [x] 1.3 Search Preferences
 
 Create `search_criteria` table to store user's job search preferences.
 

@@ -14,11 +14,11 @@ export default function SignInPage() {
       <main className="flex-grow flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Sign In to MyJobMatchr
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+              Sign In
             </h1>
-            <p className="text-gray-600">
-              Welcome back! Sign in to continue finding your perfect job match
+            <p className="text-sm text-gray-600">
+              Welcome back! Sign in to continue
             </p>
           </div>
           <SignInForm />
