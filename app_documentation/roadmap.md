@@ -26,7 +26,7 @@ Generate TypeScript types from Supabase schema and set up automatic regeneration
 
 Define core design tokens (colors, typography, spacing, shadows, borders) in Tailwind config.
 
-## [ ] 0.7 Base Component Library
+## [x] 0.7 Base Component Library
 
 Create reusable UI components (Button, Input, Card, Badge, Typography) following the design system.
 
