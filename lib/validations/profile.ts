@@ -18,7 +18,10 @@ export const updateProfileSchema = z.object({
     .nullable(),
   phone_number: z
     .string()
-    .regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone number format")
+    .refine(
+      (val) => !val || val.trim() === "" || /^\+?[1-9]\d{1,14}$/.test(val),
+      "Invalid phone number format"
+    )
     .optional()
     .nullable(),
 });
