@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { updateExperienceSchema } from "@/lib/validations/profile";
+import { updateProfileCompleteness } from "@/lib/utils/updateProfileCompleteness";
 import { ZodError } from "zod";
 
 /**
@@ -66,6 +67,9 @@ export async function PUT(
         { status: 500 }
       );
     }
+
+    // Update profile completeness
+    await updateProfileCompleteness(user.id);
 
     return NextResponse.json(
       { data: experience, message: "Experience updated successfully" },
@@ -151,6 +155,9 @@ export async function DELETE(
         { status: 500 }
       );
     }
+
+    // Update profile completeness
+    await updateProfileCompleteness(user.id);
 
     return NextResponse.json(
       { message: "Experience deleted successfully" },

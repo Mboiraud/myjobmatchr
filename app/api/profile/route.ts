@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { updateProfileSchema } from "@/lib/validations/profile";
+import { updateProfileCompleteness } from "@/lib/utils/updateProfileCompleteness";
 import { ZodError } from "zod";
 
 /**
@@ -83,6 +84,9 @@ export async function PUT(request: NextRequest) {
         { status: 500 }
       );
     }
+
+    // Update profile completeness
+    await updateProfileCompleteness(user.id);
 
     return NextResponse.json(
       { data: profile, message: "Profile updated successfully" },

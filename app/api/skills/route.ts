@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createSkillSchema } from "@/lib/validations/profile";
+import { updateProfileCompleteness } from "@/lib/utils/updateProfileCompleteness";
 import { ZodError } from "zod";
 
 /**
@@ -107,6 +108,9 @@ export async function POST(request: NextRequest) {
         { status: 500 }
       );
     }
+
+    // Update profile completeness
+    await updateProfileCompleteness(user.id);
 
     return NextResponse.json(
       { data: skill, message: "Skill created successfully" },

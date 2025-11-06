@@ -1,9 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { ProfileForm } from "./ProfileForm";
 import { ExperienceList } from "./ExperienceList";
 import { SkillsList } from "./SkillsList";
+import { ProfileCompleteness } from "./ProfileCompleteness";
 import Card from "@/components/ui/Card";
 
 interface ProfilePageClientProps {
@@ -29,13 +31,20 @@ interface ProfilePageClientProps {
 
 export function ProfilePageClient({ profile, experiences, skills }: ProfilePageClientProps) {
   const router = useRouter();
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const handleUpdate = () => {
+    // Refresh the page data
     router.refresh();
+    // Trigger completeness component to refetch
+    setRefreshKey((prev) => prev + 1);
   };
 
   return (
-    <div className="max-w-4xl space-y-8">
+    <div className="max-w-4xl space-y-6">
+      {/* Profile Completeness */}
+      <ProfileCompleteness key={refreshKey} />
+
       {/* Basic Profile Information */}
       <Card className="p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Basic Information</h3>

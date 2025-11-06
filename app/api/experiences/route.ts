@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createExperienceSchema } from "@/lib/validations/profile";
+import { updateProfileCompleteness } from "@/lib/utils/updateProfileCompleteness";
 import { ZodError } from "zod";
 
 /**
@@ -85,6 +86,9 @@ export async function POST(request: NextRequest) {
         { status: 500 }
       );
     }
+
+    // Update profile completeness
+    await updateProfileCompleteness(user.id);
 
     return NextResponse.json(
       { data: experience, message: "Experience created successfully" },
