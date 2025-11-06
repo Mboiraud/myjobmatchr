@@ -7,8 +7,8 @@ import { ExperienceForm } from "./ExperienceForm";
 
 interface Experience {
   id: string;
-  company: string;
-  title: string;
+  company_name: string;
+  job_title: string;
   start_date: string;
   end_date: string | null;
   is_current: boolean;
@@ -103,8 +103,8 @@ export function ExperienceList({ experiences, onUpdate }: ExperienceListProps) {
                 <>
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
-                      <h4 className="text-lg font-semibold text-gray-900">{exp.title}</h4>
-                      <p className="text-md text-gray-700 mt-1">{exp.company}</p>
+                      <h4 className="text-lg font-semibold text-gray-900">{exp.job_title}</h4>
+                      <p className="text-md text-gray-700 mt-1">{exp.company_name}</p>
                       <p className="text-sm text-gray-500 mt-1">
                         {formatDate(exp.start_date)} -{" "}
                         {exp.is_current ? "Present" : formatDate(exp.end_date!)}

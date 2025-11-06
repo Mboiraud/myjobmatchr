@@ -30,11 +30,11 @@ export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
  */
 export const createExperienceSchema = z
   .object({
-    company: z
+    company_name: z
       .string()
       .min(1, "Company name is required")
       .max(200, "Company name must be less than 200 characters"),
-    title: z
+    job_title: z
       .string()
       .min(1, "Job title is required")
       .max(200, "Job title must be less than 200 characters"),

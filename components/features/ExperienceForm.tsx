@@ -7,8 +7,8 @@ import { CreateExperienceInput } from "@/lib/validations/profile";
 
 interface ExperienceFormProps {
   initialData?: {
-    company: string;
-    title: string;
+    company_name: string;
+    job_title: string;
     start_date: string;
     end_date: string | null;
     is_current: boolean;
@@ -26,8 +26,8 @@ export function ExperienceForm({
   onCancel,
 }: ExperienceFormProps) {
   const [formData, setFormData] = useState<CreateExperienceInput>({
-    company: initialData?.company || "",
-    title: initialData?.title || "",
+    company_name: initialData?.company_name || "",
+    job_title: initialData?.job_title || "",
     start_date: initialData?.start_date || "",
     end_date: initialData?.end_date || null,
     is_current: initialData?.is_current || false,
@@ -47,10 +47,17 @@ export function ExperienceForm({
       const url = experienceId ? `/api/experiences/${experienceId}` : "/api/experiences";
       const method = experienceId ? "PUT" : "POST";
 
+      // Convert date format from YYYY-MM-DD to match validation
+      const submitData = {
+        ...formData,
+        start_date: formData.start_date,
+        end_date: formData.is_current ? null : formData.end_date,
+      };
+
       const response = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(submitData),
       });
 
       const data = await response.json();
@@ -93,9 +100,9 @@ export function ExperienceForm({
       <Input
         label="Company"
         type="text"
-        value={formData.company}
-        onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-        error={errors.company}
+        value={formData.company_name}
+        onChange={(e) => setFormData({ ...formData, company_name: e.target.value })}
+        error={errors.company_name}
         placeholder="Company name"
         required
       />
@@ -103,9 +110,9 @@ export function ExperienceForm({
       <Input
         label="Job Title"
         type="text"
-        value={formData.title}
-        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-        error={errors.title}
+        value={formData.job_title}
+        onChange={(e) => setFormData({ ...formData, job_title: e.target.value })}
+        error={errors.job_title}
         placeholder="Your role"
         required
       />
@@ -123,10 +130,11 @@ export function ExperienceForm({
         <Input
           label="End Date"
           type="date"
-          value={formData.end_date || ""}
+          value={formData.is_current ? "" : (formData.end_date || "")}
           onChange={(e) => setFormData({ ...formData, end_date: e.target.value || null })}
           error={errors.end_date}
           disabled={formData.is_current}
+          required={!formData.is_current}
         />
       </div>
 
