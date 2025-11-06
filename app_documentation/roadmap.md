@@ -110,19 +110,19 @@ Create server-side auth utilities for getting user session, signing up, signing 
 
 Create SignUpForm, SignInForm, and ResetPasswordForm components using design system. Include email/password fields and Google OAuth buttons.
 
-## [ ] 2.5 Auth Pages
+## [x] 2.5 Auth Pages
 
 Create signup, signin, reset-password, and OAuth callback pages.
 
-## [ ] 2.6 Email Verification Enforcement
+## [x] 2.6 Email Verification Enforcement
 
 Create email verification check page `/verify-email`. After signup or login, check if user's email is verified. If not verified: redirect to verification page showing "Please verify your email. Check your inbox for the verification link. Didn't receive it? Resend verification email." Include resend button. If verified: allow access to dashboard.
 
-## [ ] 2.7 Auth Middleware
+## [x] 2.7 Auth Middleware
 
 Create middleware to protect routes. Define public routes (signin, signup, landing, verify-email) and protected routes (dashboard, profile). Check email verification status - redirect unverified users to `/verify-email`. Redirect unauthenticated users to signin.
 
-## [ ] 2.8 Test Signup Flow
+## [x] 2.8 Test Signup Flow
 
 Test complete signup flow end-to-end: form submission, email verification enforcement, email verification, automatic creation of user_profiles, subscriptions, and notification_preferences rows, access to dashboard.
 

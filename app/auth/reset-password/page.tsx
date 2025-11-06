@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import { updatePassword } from "@/lib/auth/server";
+import { updatePassword, getUser } from "@/lib/auth/server";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
@@ -16,12 +16,15 @@ export default function SetPasswordPage() {
   const [tokenValid, setTokenValid] = useState(true);
 
   useEffect(() => {
-    // Check if user has a valid session with reset token in the URL hash
-    // Supabase passes the token in the URL fragment after redirecting from email
-    const hash = window.location.hash;
-    if (!hash.includes("access_token")) {
-      setTokenValid(false);
-    }
+    // Check if user has a valid session
+    // After the callback exchanges the code, the user should be authenticated
+    const checkAuth = async () => {
+      const user = await getUser();
+      if (!user) {
+        setTokenValid(false);
+      }
+    };
+    checkAuth();
   }, []);
 
   const handleSetPassword = async (e: React.FormEvent) => {

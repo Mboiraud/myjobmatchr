@@ -13,7 +13,7 @@ export async function signUp(email: string, password: string) {
     email,
     password,
     options: {
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?flow=signup`,
     },
   });
 
@@ -86,7 +86,9 @@ export async function resetPassword(email: string) {
   const supabase = await createClient();
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/reset-password`,
+    // The redirectTo must be the full callback URL
+    // Supabase will preserve the type=recovery parameter when redirecting
+    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
   });
 
   if (error) {

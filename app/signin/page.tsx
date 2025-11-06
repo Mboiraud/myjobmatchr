@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SignInForm } from "@/components/auth/SignInForm";
@@ -7,7 +8,19 @@ export const metadata = {
   description: "Sign in to your MyJobMatchr account",
 };
 
-export default function SignInPage() {
+interface SignInPageProps {
+  searchParams?: Promise<Record<string, string>>;
+}
+
+export default async function SignInPage({ searchParams }: SignInPageProps) {
+  const params = await searchParams;
+
+  // If there's a code parameter, redirect to callback to exchange it
+  if (params?.code) {
+    const flow = params?.flow ? `&flow=${params.flow}` : "";
+    redirect(`/auth/callback?code=${params.code}${flow}`);
+  }
+
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <Header />
