@@ -142,13 +142,9 @@ Create API routes for GET/PUT profile data, GET/POST/PUT/DELETE experiences, and
 
 Create ProfileForm for basic info, ExperienceList and ExperienceForm for work history, SkillsList and SkillsInput for skills management. All using design system components.
 
-## [ ] 3.4 Profile Completeness Calculator
+## [x] 3.4 Profile Completeness Calculator
 
-Calculate profile completeness score (0-100) based on filled fields. Update `user_profiles.profile_completeness` on every profile change.
-
-## [ ] 3.5 Profile Page
-
-Create profile page that displays completeness progress bar and renders all profile components (info, experiences, skills) with save functionality.
+Calculate profile completeness score (0-100) based on filled fields. Update `user_profiles.profile_completeness` on every profile change. Display completeness with progress bar on profile page.
 
 —
 
