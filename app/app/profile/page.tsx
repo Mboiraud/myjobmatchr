@@ -1,6 +1,41 @@
 import { PageHeader } from "@/components/layout/PageHeader";
+import { ProfilePageClient } from "@/components/features/ProfilePageClient";
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
-export default function ProfilePage() {
+export default async function ProfilePage() {
+  const supabase = await createClient();
+
+  // Check authentication
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/signin");
+  }
+
+  // Fetch profile data
+  const { data: profile } = await supabase
+    .from("user_profiles")
+    .select("*")
+    .eq("id", user.id)
+    .single();
+
+  // Fetch experiences
+  const { data: experiences } = await supabase
+    .from("user_experiences")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("start_date", { ascending: false });
+
+  // Fetch skills
+  const { data: skills } = await supabase
+    .from("user_skills")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("skill_name", { ascending: true });
+
   return (
     <div className="p-8">
       <PageHeader
@@ -8,15 +43,15 @@ export default function ProfilePage() {
         subtitle="Manage your personal information, work experience, and skills"
       />
 
-      <div className="bg-white border border-gray-200 rounded-lg p-8 text-center">
-        <div className="text-6xl mb-4">👤</div>
-        <h2 className="text-xl font-semibold text-gray-900 mb-2">
-          Coming Soon
-        </h2>
-        <p className="text-gray-600">
-          This feature is under development. You'll be able to edit your profile here.
-        </p>
-      </div>
+      <ProfilePageClient
+        profile={{
+          first_name: profile?.first_name || null,
+          last_name: profile?.last_name || null,
+          phone_number: profile?.phone_number || null,
+        }}
+        experiences={experiences || []}
+        skills={skills || []}
+      />
     </div>
   );
 }
