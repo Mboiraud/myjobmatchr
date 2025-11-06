@@ -16,8 +16,8 @@ interface ProfilePageClientProps {
   };
   experiences: Array<{
     id: string;
-    company: string;
-    title: string;
+    company_name: string;
+    job_title: string;
     start_date: string;
     end_date: string | null;
     is_current: boolean;
