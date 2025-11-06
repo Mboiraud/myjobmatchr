@@ -130,15 +130,15 @@ Test complete signup flow end-to-end: form submission, email verification enforc
 
 # Phase 3: User Profile & Onboarding
 
-## [ ] 3.1 Private App Layout & Navigation
+## [x] 3.1 Private App Layout & Navigation
 
 Create private app layout with left sidebar navigation (logo, menu items: Job Matches, Applications, Profile, Search Criteria). Add user profile section at bottom with avatar, name, and dropdown menu (Settings, Plan, Logout). Apply to all `/app/dashboard/*` routes. Use design system components.
 
-## [ ] 3.2 Profile API Routes
+## [x] 3.2 Profile API Routes
 
 Create API routes for GET/PUT profile data, GET/POST/PUT/DELETE experiences, and GET/POST/DELETE skills. Add validation using Zod schemas.
 
-## [ ] 3.3 Profile UI Components
+## [x] 3.3 Profile UI Components
 
 Create ProfileForm for basic info, ExperienceList and ExperienceForm for work history, SkillsList and SkillsInput for skills management. All using design system components.
 
