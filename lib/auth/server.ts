@@ -39,7 +39,7 @@ export async function signIn(email: string, password: string) {
     return { error: error.message };
   }
 
-  redirect("/app/dashboard");
+  redirect("/app");
 }
 
 /**
@@ -112,7 +112,7 @@ export async function updatePassword(password: string) {
     return { error: error.message };
   }
 
-  redirect("/app/dashboard");
+  redirect("/app");
 }
 
 /**
@@ -139,4 +139,39 @@ export async function getUser() {
   } = await supabase.auth.getUser();
 
   return user;
+}
+
+/**
+ * Get the current user's profile from user_profiles table
+ */
+export async function getUserProfile() {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return null;
+  }
+
+  const { data: profile, error } = await supabase
+    .from("user_profiles")
+    .select("*")
+    .eq("id", user.id)
+    .single();
+
+  if (error) {
+    console.error("Error fetching user profile:", error);
+    return null;
+  }
+
+  // Combine profile with auth user email
+  return {
+    ...profile,
+    email: user.email || "",
+    full_name: profile.first_name && profile.last_name 
+      ? `${profile.first_name} ${profile.last_name}` 
+      : profile.first_name || profile.last_name || "",
+  };
 }

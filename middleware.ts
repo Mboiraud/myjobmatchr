@@ -46,8 +46,8 @@ export async function middleware(request: NextRequest) {
     // Allow authenticated users to access /auth/reset-password since they need to set their new password
     const authPages = ["/signin", "/signup"];
     if (authPages.includes(pathname) && user) {
-      // User is authenticated, redirect to dashboard
-      return NextResponse.redirect(new URL("/app/dashboard", request.url));
+      // User is authenticated, redirect to app
+      return NextResponse.redirect(new URL("/app", request.url));
     }
     
     // Note: /auth/reset-password is intentionally NOT in the authPages array
