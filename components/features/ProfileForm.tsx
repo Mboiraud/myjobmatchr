@@ -4,6 +4,7 @@ import { useState } from "react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { UpdateProfileInput } from "@/lib/validations/profile";
+import { updateProfile } from "@/app/actions/profile";
 
 interface ProfileFormProps {
   initialData: {
@@ -31,33 +32,13 @@ export function ProfileForm({ initialData, onSuccess }: ProfileFormProps) {
     setMessage(null);
 
     try {
-      const response = await fetch("/api/profile", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        if (response.status === 400 && data.details) {
-          // Handle validation errors
-          const newErrors: Record<string, string> = {};
-          data.details.forEach((detail: { field: string; message: string }) => {
-            newErrors[detail.field] = detail.message;
-          });
-          setErrors(newErrors);
-        } else {
-          setMessage({ type: "error", text: data.error || "Failed to update profile" });
-        }
-        return;
-      }
-
+      await updateProfile(formData);
       setMessage({ type: "success", text: "Profile updated successfully!" });
       if (onSuccess) onSuccess();
     } catch (error) {
       console.error("Error updating profile:", error);
-      setMessage({ type: "error", text: "An unexpected error occurred" });
+      const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
+      setMessage({ type: "error", text: errorMessage });
     } finally {
       setIsLoading(false);
     }
