@@ -53,7 +53,7 @@ export function ProfilePageClient({ profile, experiences, skills }: ProfilePageC
 
       {/* Work Experience */}
       <Card className="p-6">
-        <ExperienceList experiences={experiences} onUpdate={handleUpdate} />
+        <ExperienceList experiences={experiences} />
       </Card>
 
       {/* Skills */}

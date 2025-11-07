@@ -4,6 +4,7 @@ import { useState } from "react";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { ExperienceForm } from "./ExperienceForm";
+import { deleteExperience } from "@/app/actions/experiences";
 
 interface Experience {
   id: string;
@@ -17,10 +18,9 @@ interface Experience {
 
 interface ExperienceListProps {
   experiences: Experience[];
-  onUpdate: () => void;
 }
 
-export function ExperienceList({ experiences, onUpdate }: ExperienceListProps) {
+export function ExperienceList({ experiences }: ExperienceListProps) {
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -35,19 +35,11 @@ export function ExperienceList({ experiences, onUpdate }: ExperienceListProps) {
 
     setDeletingId(id);
     try {
-      const response = await fetch(`/api/experiences/${id}`, {
-        method: "DELETE",
-      });
-
-      if (response.ok) {
-        onUpdate();
-      } else {
-        const data = await response.json();
-        alert(data.error || "Failed to delete experience");
-      }
+      await deleteExperience(id);
     } catch (error) {
       console.error("Error deleting experience:", error);
-      alert("An unexpected error occurred");
+      const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
+      alert(errorMessage);
     } finally {
       setDeletingId(null);
     }
@@ -68,10 +60,7 @@ export function ExperienceList({ experiences, onUpdate }: ExperienceListProps) {
         <Card className="p-6">
           <h4 className="text-md font-semibold text-gray-900 mb-4">Add New Experience</h4>
           <ExperienceForm
-            onSuccess={() => {
-              setIsAdding(false);
-              onUpdate();
-            }}
+            onSuccess={() => setIsAdding(false)}
             onCancel={() => setIsAdding(false)}
           />
         </Card>
@@ -92,10 +81,7 @@ export function ExperienceList({ experiences, onUpdate }: ExperienceListProps) {
                   <ExperienceForm
                     initialData={exp}
                     experienceId={exp.id}
-                    onSuccess={() => {
-                      setEditingId(null);
-                      onUpdate();
-                    }}
+                    onSuccess={() => setEditingId(null)}
                     onCancel={() => setEditingId(null)}
                   />
                 </>

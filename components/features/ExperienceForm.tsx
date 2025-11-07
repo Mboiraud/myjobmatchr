@@ -4,6 +4,7 @@ import { useState } from "react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { CreateExperienceInput } from "@/lib/validations/profile";
+import { addExperience, updateExperience } from "@/app/actions/experiences";
 
 interface ExperienceFormProps {
   initialData?: {
@@ -44,44 +45,25 @@ export function ExperienceForm({
     setMessage(null);
 
     try {
-      const url = experienceId ? `/api/experiences/${experienceId}` : "/api/experiences";
-      const method = experienceId ? "PUT" : "POST";
-
-      // Convert date format from YYYY-MM-DD to match validation
+      // Convert date format and prepare data
       const submitData = {
         ...formData,
-        start_date: formData.start_date,
         end_date: formData.is_current ? null : formData.end_date,
       };
 
-      const response = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(submitData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        if (response.status === 400 && data.details) {
-          const newErrors: Record<string, string> = {};
-          data.details.forEach((detail: { field: string; message: string }) => {
-            newErrors[detail.field] = detail.message;
-          });
-          setErrors(newErrors);
-        } else {
-          setMessage({ type: "error", text: data.error || "Failed to save experience" });
-        }
-        return;
+      if (experienceId) {
+        await updateExperience(experienceId, submitData);
+      } else {
+        await addExperience(submitData);
       }
 
-      setMessage({ type: "success", text: "Experience saved successfully!" });
       if (onSuccess) {
-        setTimeout(() => onSuccess(), 500);
+        onSuccess();
       }
     } catch (error) {
       console.error("Error saving experience:", error);
-      setMessage({ type: "error", text: "An unexpected error occurred" });
+      const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
+      setMessage({ type: "error", text: errorMessage });
     } finally {
       setIsLoading(false);
     }
