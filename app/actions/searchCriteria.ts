@@ -58,7 +58,7 @@ export async function updateSearchCriteria(data: SearchCriteriaInput) {
     await regenerateMatchingInstructions(user.id);
 
     // Revalidate search criteria page
-    revalidatePath("/app/dashboard/search-criteria");
+    revalidatePath("/app/app/search-criteria");
 
     return { success: true };
   } catch (error) {

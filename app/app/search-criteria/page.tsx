@@ -1,6 +1,26 @@
 import { PageHeader } from "@/components/layout/PageHeader";
+import { SearchCriteriaForm } from "@/components/features/search/SearchCriteriaForm";
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
-export default function SearchCriteriaPage() {
+export default async function SearchCriteriaPage() {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/signin");
+  }
+
+  // Fetch current search criteria
+  const { data: searchCriteria } = await supabase
+    .from("search_criteria")
+    .select("*")
+    .eq("user_id", user.id)
+    .single();
+
   return (
     <div className="p-8">
       <PageHeader
@@ -8,15 +28,7 @@ export default function SearchCriteriaPage() {
         subtitle="Define your job search preferences and activate daily automatic searches"
       />
 
-      <div className="bg-white border border-gray-200 rounded-lg p-8 text-center">
-        <div className="text-6xl mb-4">🔍</div>
-        <h2 className="text-xl font-semibold text-gray-900 mb-2">
-          Coming Soon
-        </h2>
-        <p className="text-gray-600">
-          This feature is under development. You'll be able to set your search criteria here.
-        </p>
-      </div>
+      <SearchCriteriaForm initialData={searchCriteria || undefined} />
     </div>
   );
 }

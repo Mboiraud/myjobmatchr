@@ -1,19 +1,21 @@
 "use client";
 
+type WorkModel = "remote" | "hybrid" | "onsite";
+
 interface WorkModelInputProps {
-  value: string[];
-  onChange: (value: string[]) => void;
+  value: WorkModel[];
+  onChange: (value: WorkModel[]) => void;
   error?: string;
 }
 
 const options = [
-  { id: "remote", label: "Remote" },
-  { id: "hybrid", label: "Hybrid" },
-  { id: "onsite", label: "On-site" },
+  { id: "remote" as const, label: "Remote" },
+  { id: "hybrid" as const, label: "Hybrid" },
+  { id: "onsite" as const, label: "On-site" },
 ];
 
 export function WorkModelInput({ value, onChange, error }: WorkModelInputProps) {
-  const handleToggle = (option: string) => {
+  const handleToggle = (option: WorkModel) => {
     if (value.includes(option)) {
       onChange(value.filter((v) => v !== option));
     } else {

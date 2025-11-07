@@ -2,7 +2,7 @@
 
 interface TextAreaInputProps {
   label: string;
-  value: string | null;
+  value: string | null | undefined;
   onChange: (value: string | null) => void;
   error?: string;
   placeholder?: string;
