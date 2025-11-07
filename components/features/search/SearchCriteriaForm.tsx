@@ -11,41 +11,15 @@ import { CheckboxArrayInput } from "./CheckboxArrayInput";
 import { SimpleArrayInput } from "./SimpleArrayInput";
 import { SimpleNumberInput } from "./SimpleNumberInput";
 import { SimpleToggle } from "./SimpleToggle";
-import { SearchCriteriaInput } from "@/lib/validations/searchCriteria";
+import { SearchCriteriaInput, searchCriteriaInputSchema } from "@/lib/validations/searchCriteria";
 import { updateSearchCriteria } from "@/app/actions/searchCriteria";
+import { SENIORITY_OPTIONS, CONTRACT_TYPE_OPTIONS, INDUSTRY_OPTIONS } from "@/lib/constants/searchCriteria";
+import { ZodError } from "zod";
 
 interface SearchCriteriaFormProps {
   initialData?: Partial<SearchCriteriaInput>;
   onSuccess?: () => void;
 }
-
-const seniorityOptions = [
-  { id: "entry", label: "Entry Level" },
-  { id: "mid", label: "Mid-Level" },
-  { id: "senior", label: "Senior" },
-  { id: "lead", label: "Lead" },
-  { id: "director", label: "Director" },
-  { id: "executive", label: "Executive" },
-];
-
-const contractTypeOptions = [
-  { id: "full-time", label: "Full-time" },
-  { id: "part-time", label: "Part-time" },
-  { id: "contract", label: "Contract" },
-  { id: "freelance", label: "Freelance" },
-  { id: "internship", label: "Internship" },
-];
-
-const industryOptions = [
-  { id: "tech", label: "Technology" },
-  { id: "finance", label: "Finance" },
-  { id: "healthcare", label: "Healthcare" },
-  { id: "manufacturing", label: "Manufacturing" },
-  { id: "retail", label: "Retail" },
-  { id: "education", label: "Education" },
-  { id: "legal", label: "Legal" },
-  { id: "other", label: "Other" },
-];
 
 export function SearchCriteriaForm({
   initialData,
@@ -78,28 +52,31 @@ export function SearchCriteriaForm({
     text: string;
   } | null>(null);
 
-  // Simple validation
+  // Helper to update form fields
+  const updateField = <K extends keyof SearchCriteriaInput>(
+    field: K,
+    value: SearchCriteriaInput[K]
+  ) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  // Validate with Zod
   const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-
-    if (!formData.target_job_titles?.length) {
-      newErrors.target_job_titles = "At least one job title is required";
+    try {
+      searchCriteriaInputSchema.parse(formData);
+      setErrors({});
+      return true;
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const newErrors: Record<string, string> = {};
+        error.issues.forEach((issue) => {
+          const path = issue.path.join(".");
+          newErrors[path] = issue.message;
+        });
+        setErrors(newErrors);
+      }
+      return false;
     }
-
-    if (!formData.work_models?.length) {
-      newErrors.work_models = "At least one work model must be selected";
-    }
-
-    if (
-      formData.salary_min &&
-      formData.salary_max &&
-      formData.salary_min >= formData.salary_max
-    ) {
-      newErrors.salary = "Minimum salary must be less than maximum salary";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -142,20 +119,20 @@ export function SearchCriteriaForm({
         <div className="space-y-4">
           <JobTitlesInput
             value={formData.target_job_titles || []}
-            onChange={(v) => setFormData({ ...formData, target_job_titles: v })}
+            onChange={(v) => updateField("target_job_titles", v)}
             error={errors.target_job_titles}
           />
           <CheckboxArrayInput
             label="Industries"
             value={formData.industries || []}
-            onChange={(v) => setFormData({ ...formData, industries: v })}
-            options={industryOptions}
+            onChange={(v) => updateField("industries", v)}
+            options={INDUSTRY_OPTIONS}
           />
           <CheckboxArrayInput
             label="Seniority Levels"
             value={formData.seniority_levels || []}
-            onChange={(v) => setFormData({ ...formData, seniority_levels: v })}
-            options={seniorityOptions}
+            onChange={(v) => updateField("seniority_levels", v)}
+            options={SENIORITY_OPTIONS}
           />
         </div>
       </Card>
@@ -169,20 +146,18 @@ export function SearchCriteriaForm({
           <SimpleArrayInput
             label="Preferred Locations"
             value={formData.preferred_locations || []}
-            onChange={(v) => setFormData({ ...formData, preferred_locations: v })}
+            onChange={(v) => updateField("preferred_locations", v)}
             placeholder="e.g., Paris"
           />
           <WorkModelInput
             value={formData.work_models || []}
-            onChange={(v) => setFormData({ ...formData, work_models: v })}
+            onChange={(v) => updateField("work_models", v)}
             error={errors.work_models}
           />
           <SimpleToggle
             label="Open to relocation"
             value={formData.willing_to_relocate || false}
-            onChange={(v) =>
-              setFormData({ ...formData, willing_to_relocate: v })
-            }
+            onChange={(v) => updateField("willing_to_relocate", v)}
           />
         </div>
       </Card>
@@ -197,19 +172,15 @@ export function SearchCriteriaForm({
             minValue={formData.salary_min || null}
             maxValue={formData.salary_max || null}
             currency={formData.salary_currency || "EUR"}
-            onMinChange={(v) => setFormData({ ...formData, salary_min: v })}
-            onMaxChange={(v) => setFormData({ ...formData, salary_max: v })}
-            onCurrencyChange={(v) =>
-              setFormData({ ...formData, salary_currency: v })
-            }
+            onMinChange={(v) => updateField("salary_min", v)}
+            onMaxChange={(v) => updateField("salary_max", v)}
+            onCurrencyChange={(v) => updateField("salary_currency", v)}
             error={errors.salary}
           />
           <SimpleNumberInput
             label="Years of Experience"
             value={formData.years_of_experience || null}
-            onChange={(v) =>
-              setFormData({ ...formData, years_of_experience: v })
-            }
+            onChange={(v) => updateField("years_of_experience", v)}
             placeholder="e.g., 5"
             min={0}
             max={60}
@@ -226,13 +197,13 @@ export function SearchCriteriaForm({
           <CheckboxArrayInput
             label="Contract Types"
             value={formData.contract_types || []}
-            onChange={(v) => setFormData({ ...formData, contract_types: v })}
-            options={contractTypeOptions}
+            onChange={(v) => updateField("contract_types", v)}
+            options={CONTRACT_TYPE_OPTIONS}
           />
           <SimpleArrayInput
             label="Important Keywords"
             value={formData.important_keywords || []}
-            onChange={(v) => setFormData({ ...formData, important_keywords: v })}
+            onChange={(v) => updateField("important_keywords", v)}
             placeholder="e.g., Python, React"
           />
         </div>
@@ -247,33 +218,25 @@ export function SearchCriteriaForm({
           <TextAreaInput
             label="Ideal Role Description"
             value={formData.ideal_role_description}
-            onChange={(v) =>
-              setFormData({ ...formData, ideal_role_description: v })
-            }
+            onChange={(v) => updateField("ideal_role_description", v)}
             placeholder="Describe your ideal role..."
           />
           <TextAreaInput
             label="Must Have Requirements"
             value={formData.must_have_requirements}
-            onChange={(v) =>
-              setFormData({ ...formData, must_have_requirements: v })
-            }
+            onChange={(v) => updateField("must_have_requirements", v)}
             placeholder="What are non-negotiables for you?"
           />
           <TextAreaInput
             label="Deal Breakers"
             value={formData.must_not_have_requirements}
-            onChange={(v) =>
-              setFormData({ ...formData, must_not_have_requirements: v })
-            }
+            onChange={(v) => updateField("must_not_have_requirements", v)}
             placeholder="What would make you reject a role?"
           />
           <TextAreaInput
             label="Work Environment Preferences"
             value={formData.work_environment_preferences}
-            onChange={(v) =>
-              setFormData({ ...formData, work_environment_preferences: v })
-            }
+            onChange={(v) => updateField("work_environment_preferences", v)}
             placeholder="What company culture do you thrive in?"
           />
         </div>

@@ -25,25 +25,9 @@ export async function updateSearchCriteria(data: SearchCriteriaInput) {
       .from("search_criteria")
       .upsert(
         {
+          ...validatedData,
           user_id: user.id,
-          target_job_titles: validatedData.target_job_titles,
-          industries: validatedData.industries,
-          seniority_levels: validatedData.seniority_levels,
-          years_of_experience: validatedData.years_of_experience,
-          preferred_locations: validatedData.preferred_locations,
-          work_models: validatedData.work_models,
-          willing_to_relocate: validatedData.willing_to_relocate,
-          salary_min: validatedData.salary_min,
-          salary_max: validatedData.salary_max,
-          salary_currency: validatedData.salary_currency,
-          contract_types: validatedData.contract_types,
-          ideal_role_description: validatedData.ideal_role_description,
-          must_have_requirements: validatedData.must_have_requirements,
-          must_not_have_requirements: validatedData.must_not_have_requirements,
-          work_environment_preferences:
-            validatedData.work_environment_preferences,
-          important_keywords: validatedData.important_keywords,
-          matching_instructions: "", // Will be updated below
+          matching_instructions: "", // Will be updated by regenerateMatchingInstructions
         },
         {
           onConflict: "user_id",
@@ -90,7 +74,7 @@ export async function toggleSearchActive(isActive: boolean) {
       throw new Error("Failed to update search status");
     }
 
-    revalidatePath("/app/dashboard/search-criteria");
+    revalidatePath("/app/app/search-criteria");
 
     return { success: true };
   } catch (error) {

@@ -3,8 +3,9 @@
 import { useState } from "react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import { UpdateProfileInput } from "@/lib/validations/profile";
+import { UpdateProfileInput, updateProfileSchema } from "@/lib/validations/profile";
 import { updateProfile } from "@/app/actions/profile";
+import { ZodError } from "zod";
 
 interface ProfileFormProps {
   initialData: {
@@ -25,11 +26,42 @@ export function ProfileForm({ initialData, onSuccess }: ProfileFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
+  // Helper to update form fields
+  const updateField = <K extends keyof UpdateProfileInput>(
+    field: K,
+    value: UpdateProfileInput[K]
+  ) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  // Validate with Zod
+  const validateForm = () => {
+    try {
+      updateProfileSchema.parse(formData);
+      setErrors({});
+      return true;
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const newErrors: Record<string, string> = {};
+        error.issues.forEach((issue) => {
+          const path = issue.path.join(".");
+          newErrors[path] = issue.message;
+        });
+        setErrors(newErrors);
+      }
+      return false;
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    setErrors({});
     setMessage(null);
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsLoading(true);
 
     try {
       await updateProfile(formData);
@@ -51,7 +83,7 @@ export function ProfileForm({ initialData, onSuccess }: ProfileFormProps) {
           label="First Name"
           type="text"
           value={formData.first_name || ""}
-          onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
+          onChange={(e) => updateField("first_name", e.target.value)}
           error={errors.first_name}
           placeholder="Enter your first name"
         />
@@ -60,7 +92,7 @@ export function ProfileForm({ initialData, onSuccess }: ProfileFormProps) {
           label="Last Name"
           type="text"
           value={formData.last_name || ""}
-          onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
+          onChange={(e) => updateField("last_name", e.target.value)}
           error={errors.last_name}
           placeholder="Enter your last name"
         />
@@ -70,7 +102,7 @@ export function ProfileForm({ initialData, onSuccess }: ProfileFormProps) {
         label="Phone Number"
         type="tel"
         value={formData.phone_number || ""}
-        onChange={(e) => setFormData({ ...formData, phone_number: e.target.value })}
+        onChange={(e) => updateField("phone_number", e.target.value)}
         error={errors.phone_number}
         placeholder="+1234567890"
         helperText="Format: +[country code][number]"
@@ -89,7 +121,7 @@ export function ProfileForm({ initialData, onSuccess }: ProfileFormProps) {
       )}
 
       <div className="flex justify-end">
-        <Button type="submit" disabled={isLoading}>
+        <Button type="submit" disabled={isLoading || Object.keys(errors).length > 0}>
           {isLoading ? "Saving..." : "Save Changes"}
         </Button>
       </div>

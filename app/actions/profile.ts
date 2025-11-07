@@ -23,11 +23,7 @@ export async function updateProfile(data: UpdateProfileInput) {
     // Update profile
     const { data: updatedProfile, error: updateError } = await supabase
       .from("user_profiles")
-      .update({
-        first_name: validatedData.first_name,
-        last_name: validatedData.last_name,
-        phone_number: validatedData.phone_number,
-      })
+      .update(validatedData)
       .eq("id", user.id)
       .select()
       .single();
@@ -40,7 +36,7 @@ export async function updateProfile(data: UpdateProfileInput) {
     await updateProfileCompleteness(user.id);
 
     // Revalidate just the profile page
-    revalidatePath("/app/profile");
+    revalidatePath("/app/app/profile");
 
     return updatedProfile;
   } catch (error) {
