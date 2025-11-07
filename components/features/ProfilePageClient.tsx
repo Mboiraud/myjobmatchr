@@ -31,19 +31,19 @@ interface ProfilePageClientProps {
 
 export function ProfilePageClient({ profile, experiences, skills }: ProfilePageClientProps) {
   const router = useRouter();
-  const [refreshKey, setRefreshKey] = useState(0);
+  const [refetchKey, setRefetchKey] = useState(0);
 
   const handleUpdate = () => {
     // Refresh the page data
     router.refresh();
-    // Trigger completeness component to refetch
-    setRefreshKey((prev) => prev + 1);
+    // Trigger completeness to refetch
+    setRefetchKey((prev) => prev + 1);
   };
 
   return (
     <div className="max-w-4xl space-y-6">
       {/* Profile Completeness */}
-      <ProfileCompleteness key={refreshKey} />
+      <ProfileCompleteness refetchTrigger={refetchKey} />
 
       {/* Basic Profile Information */}
       <Card className="p-6">

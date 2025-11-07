@@ -48,13 +48,10 @@ export function SkillsInput({ existingSkills, onSuccess }: SkillsInputProps) {
         return;
       }
 
-      setMessage({ type: "success", text: "Skill added successfully!" });
       setSkillName("");
+      setMessage(null);
       if (onSuccess) {
-        setTimeout(() => {
-          setMessage(null);
-          onSuccess();
-        }, 500);
+        onSuccess();
       }
     } catch (error) {
       console.error("Error adding skill:", error);

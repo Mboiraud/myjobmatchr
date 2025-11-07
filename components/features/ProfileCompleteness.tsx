@@ -6,6 +6,7 @@ import { getCompletenessMessage, getCompletenessColor } from "@/lib/utils/profil
 
 interface ProfileCompletenessProps {
   initialScore?: number;
+  refetchTrigger?: number;
 }
 
 interface CompletenessData {
@@ -18,13 +19,13 @@ interface CompletenessData {
   missingFields: string[];
 }
 
-export function ProfileCompleteness({ initialScore = 0 }: ProfileCompletenessProps) {
+export function ProfileCompleteness({ refetchTrigger }: ProfileCompletenessProps) {
   const [data, setData] = useState<CompletenessData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchCompleteness();
-  }, []);
+  }, [refetchTrigger]);
 
   const fetchCompleteness = async () => {
     try {
