@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Badge from "@/components/ui/Badge";
 import { SkillsInput } from "./SkillsInput";
+import { deleteSkill } from "@/app/actions/skills";
 
 interface Skill {
   id: string;
@@ -11,10 +12,9 @@ interface Skill {
 
 interface SkillsListProps {
   skills: Skill[];
-  onUpdate: () => void;
 }
 
-export function SkillsList({ skills, onUpdate }: SkillsListProps) {
+export function SkillsList({ skills }: SkillsListProps) {
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const handleDelete = async (id: string, skillName: string) => {
@@ -22,19 +22,11 @@ export function SkillsList({ skills, onUpdate }: SkillsListProps) {
 
     setDeletingId(id);
     try {
-      const response = await fetch(`/api/skills/${id}`, {
-        method: "DELETE",
-      });
-
-      if (response.ok) {
-        onUpdate();
-      } else {
-        const data = await response.json();
-        alert(data.error || "Failed to delete skill");
-      }
+      await deleteSkill(id);
     } catch (error) {
       console.error("Error deleting skill:", error);
-      alert("An unexpected error occurred");
+      const errorMessage = error instanceof Error ? error.message : "Failed to delete skill";
+      alert(errorMessage);
     } finally {
       setDeletingId(null);
     }
@@ -44,7 +36,7 @@ export function SkillsList({ skills, onUpdate }: SkillsListProps) {
     <div className="space-y-4">
       <h3 className="text-lg font-semibold text-gray-900">Skills</h3>
 
-      <SkillsInput existingSkills={skills.map((s) => s.skill_name)} onSuccess={onUpdate} />
+      <SkillsInput existingSkills={skills.map((s) => s.skill_name)} />
 
       {skills.length === 0 ? (
         <div className="text-center py-8 text-gray-500">

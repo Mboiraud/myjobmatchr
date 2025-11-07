@@ -3,13 +3,13 @@
 import { useState } from "react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
+import { addSkill } from "@/app/actions/skills";
 
 interface SkillsInputProps {
   existingSkills: string[];
-  onSuccess?: () => void;
 }
 
-export function SkillsInput({ existingSkills, onSuccess }: SkillsInputProps) {
+export function SkillsInput({ existingSkills }: SkillsInputProps) {
   const [skillName, setSkillName] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -29,33 +29,13 @@ export function SkillsInput({ existingSkills, onSuccess }: SkillsInputProps) {
     }
 
     try {
-      const response = await fetch("/api/skills", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ skill_name: skillName }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        if (response.status === 400 && data.details) {
-          setError(data.details[0]?.message || "Validation failed");
-        } else if (response.status === 409) {
-          setError("This skill already exists");
-        } else {
-          setMessage({ type: "error", text: data.error || "Failed to add skill" });
-        }
-        return;
-      }
-
+      await addSkill(skillName);
       setSkillName("");
       setMessage(null);
-      if (onSuccess) {
-        onSuccess();
-      }
     } catch (error) {
       console.error("Error adding skill:", error);
-      setMessage({ type: "error", text: "An unexpected error occurred" });
+      const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
+      setMessage({ type: "error", text: errorMessage });
     } finally {
       setIsLoading(false);
     }

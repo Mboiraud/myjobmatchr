@@ -58,7 +58,7 @@ export function ProfilePageClient({ profile, experiences, skills }: ProfilePageC
 
       {/* Skills */}
       <Card className="p-6">
-        <SkillsList skills={skills} onUpdate={handleUpdate} />
+        <SkillsList skills={skills} />
       </Card>
     </div>
   );
