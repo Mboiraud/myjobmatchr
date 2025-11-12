@@ -34,9 +34,12 @@ export async function regenerateMatchingInstructions(
     parts.push(`Level: ${searchCriteria.seniority_levels.join(", ")}.`);
   }
 
-  // Locations
-  if (searchCriteria.preferred_locations?.length > 0) {
-    parts.push(`Locations: ${searchCriteria.preferred_locations.join(", ")}.`);
+  // Country and City
+  if (searchCriteria.country) {
+    parts.push(`Country: ${searchCriteria.country}.`);
+  }
+  if (searchCriteria.preferred_city) {
+    parts.push(`City: ${searchCriteria.preferred_city}.`);
   }
 
   // Work models

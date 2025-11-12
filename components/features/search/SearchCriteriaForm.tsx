@@ -11,9 +11,11 @@ import { CheckboxArrayInput } from "./CheckboxArrayInput";
 import { SimpleArrayInput } from "./SimpleArrayInput";
 import { SimpleNumberInput } from "./SimpleNumberInput";
 import { SimpleToggle } from "./SimpleToggle";
+import { SimpleSelectInput } from "./SimpleSelectInput";
+import { SimpleTextInput } from "./SimpleTextInput";
 import { SearchCriteriaInput, searchCriteriaInputSchema } from "@/lib/validations/searchCriteria";
 import { updateSearchCriteria } from "@/app/actions/searchCriteria";
-import { SENIORITY_OPTIONS, CONTRACT_TYPE_OPTIONS, INDUSTRY_OPTIONS } from "@/lib/constants/searchCriteria";
+import { SENIORITY_OPTIONS, CONTRACT_TYPE_OPTIONS, INDUSTRY_OPTIONS, COUNTRY_OPTIONS } from "@/lib/constants/searchCriteria";
 import { ZodError } from "zod";
 
 interface SearchCriteriaFormProps {
@@ -30,7 +32,8 @@ export function SearchCriteriaForm({
     industries: initialData?.industries || [],
     seniority_levels: initialData?.seniority_levels || [],
     years_of_experience: initialData?.years_of_experience || null,
-    preferred_locations: initialData?.preferred_locations || [],
+    country: initialData?.country || null,
+    preferred_city: initialData?.preferred_city || null,
     work_models: initialData?.work_models || [],
     willing_to_relocate: initialData?.willing_to_relocate || false,
     salary_min: initialData?.salary_min || null,
@@ -143,11 +146,20 @@ export function SearchCriteriaForm({
           Location & Work
         </h3>
         <div className="space-y-4">
-          <SimpleArrayInput
-            label="Preferred Locations"
-            value={formData.preferred_locations || []}
-            onChange={(v) => updateField("preferred_locations", v)}
+          <SimpleSelectInput
+            label="Country"
+            value={formData.country || null}
+            onChange={(v) => updateField("country", v)}
+            options={COUNTRY_OPTIONS}
+            placeholder="Select a country"
+            error={errors.country}
+          />
+          <SimpleTextInput
+            label="Preferred City"
+            value={formData.preferred_city || null}
+            onChange={(v) => updateField("preferred_city", v)}
             placeholder="e.g., Paris"
+            error={errors.preferred_city}
           />
           <WorkModelInput
             value={formData.work_models || []}

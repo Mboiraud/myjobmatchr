@@ -53,7 +53,8 @@
     - `industries (TEXT[])` - Preferred industries
     - `seniority_levels (TEXT[])` - Desired seniority
     - `years_of_experience (INTEGER)` - Total years of experience
-    - `preferred_locations (TEXT[])` - Cities/regions
+    - `country (TEXT)` - ISO 3166-1 alpha-2 country code (e.g., 'FR', 'US', 'DE')
+    - `preferred_city (TEXT)` - Single preferred city name
     - `work_models (TEXT[])` - 'remote', 'hybrid', 'onsite'
     - `willing_to_relocate (BOOLEAN, DEFAULT false)` - Open to relocation
     - `salary_min (INTEGER)` - Minimum acceptable salary per year

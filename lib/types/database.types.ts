@@ -452,6 +452,7 @@ export type Database = {
       search_criteria: {
         Row: {
           contract_types: string[] | null
+          country: string | null
           created_at: string | null
           id: string
           ideal_role_description: string | null
@@ -461,7 +462,7 @@ export type Database = {
           matching_instructions: string
           must_have_requirements: string | null
           must_not_have_requirements: string | null
-          preferred_locations: string[] | null
+          preferred_city: string | null
           salary_currency: string | null
           salary_max: number | null
           salary_min: number | null
@@ -476,6 +477,7 @@ export type Database = {
         }
         Insert: {
           contract_types?: string[] | null
+          country?: string | null
           created_at?: string | null
           id?: string
           ideal_role_description?: string | null
@@ -485,7 +487,7 @@ export type Database = {
           matching_instructions: string
           must_have_requirements?: string | null
           must_not_have_requirements?: string | null
-          preferred_locations?: string[] | null
+          preferred_city?: string | null
           salary_currency?: string | null
           salary_max?: number | null
           salary_min?: number | null
@@ -500,6 +502,7 @@ export type Database = {
         }
         Update: {
           contract_types?: string[] | null
+          country?: string | null
           created_at?: string | null
           id?: string
           ideal_role_description?: string | null
@@ -509,7 +512,7 @@ export type Database = {
           matching_instructions?: string
           must_have_requirements?: string | null
           must_not_have_requirements?: string | null
-          preferred_locations?: string[] | null
+          preferred_city?: string | null
           salary_currency?: string | null
           salary_max?: number | null
           salary_min?: number | null

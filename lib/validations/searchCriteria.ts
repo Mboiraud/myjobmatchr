@@ -16,7 +16,8 @@ export const searchCriteriaSchema = z.object({
     .max(60, "Years of experience cannot exceed 60")
     .optional()
     .nullable(),
-  preferred_locations: z.array(z.string()).optional().default([]),
+  country: z.string().min(2, "Country is required").max(2).optional().nullable(),
+  preferred_city: z.string().optional().nullable(),
   work_models: z
     .array(z.enum(["remote", "hybrid", "onsite"]))
     .min(1, "At least one work model must be selected"),
