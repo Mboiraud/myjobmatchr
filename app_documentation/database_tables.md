@@ -103,7 +103,7 @@
     - `id (UUID, PK)` - Unique identifier
     - `parent_job_id (UUID, FK → jobs.id, NULLABLE)` - Links to parent job (NULL = canonical job)
     - `is_canonical (BOOLEAN, DEFAULT false)` - True if this is the main job (not a duplicate)
-    - `company_id (UUID, FK → companies.id, NOT NULL)` - Links to company
+    - `company_id (UUID, FK → companies.id, NULLABLE)` - Links to company (NULL when job first created, populated during company normalization)
     - `company_name_raw (TEXT)` - Original company name from job board (for reconciliation)
     - `source_board (TEXT, NOT NULL)` - 'indeed', 'linkedin', 'glassdoor', 'company_website'
     - `source_url (TEXT, UNIQUE, NOT NULL)` - Job posting URL
@@ -118,6 +118,7 @@
     - `salary_currency (TEXT)` - 'EUR', 'USD', 'GBP', etc.
     - `salary_period (TEXT)` - 'year', 'month', 'hour'
     - `location (TEXT)` - Job location
+    - `country (TEXT)` - ISO 3166-1 alpha-2 country code (e.g., 'FR', 'US', 'DE')
     - `work_model (TEXT)` - 'remote', 'hybrid', 'onsite'
     - `contract_type (TEXT)` - 'full-time', 'part-time', 'contract', 'freelance', 'internship'
     - `employment_status (TEXT)` - 'permanent', 'fixed-term'
@@ -163,12 +164,12 @@
     - `id (UUID, PK)` - Unique identifier
     - `job_id (UUID, FK → jobs.id, NOT NULL)` - Links to job (canonical job)
     - `user_id (UUID, FK → user_profiles.id, NOT NULL)` - Links to user
-    - `score (INTEGER, NOT NULL)` - Match score (1-10)
+    - `score (INTEGER, NULLABLE)` - Match score (1-10) (NULL when created as placeholder, populated after AI evaluation)
     - `reasoning (TEXT)` - Why this job matches/doesn't match
     - `matching_points (TEXT[])` - Positive matching points
     - `concerns (TEXT[])` - Potential concerns or blockers
     - `status (TEXT, DEFAULT 'fresh')` - 'fresh', 'reviewing', 'accepted', 'discarded'
-    - `evaluated_at (TIMESTAMP, NOT NULL)` - When AI evaluated this match
+    - `evaluated_at (TIMESTAMP, NULLABLE)` - When AI evaluated this match (NULL when created as placeholder, populated after AI evaluation)
     - `created_at (TIMESTAMP)` - Creation timestamp
     - `updated_at (TIMESTAMP)` - Last update timestamp
     - `is_discarded (BOOLEAN, DEFAULT false)` - was the match discarded by pre-filter
